@@ -3,23 +3,22 @@
 
 <front>
     <title abbrev="NFSv4">
-      Minorversioning Rules for NFSv4
+      Minor versioning Rules for NFSv4
     </title>
 
-    <author fullname="Thomas Haynes" 
-            initials="T." 
-            surname="Haynes"
-            role="editor">
+    <author fullname="Thomas Haynes"
+            initials="T."
+            surname="Haynes">
         <organization abbrev="NetApp">NetApp</organization>
         <address>
             <postal>
-                <street>9110 E 66th St</street>
-                <city>Tulsa</city>
-                <region>OK</region>
-                <code>74133</code>
+                <street>495 E Java Dr</street>
+                <city>Sunnyvale</city>
+                <region>CA</region>
+                <code>95054</code>
                 <country>USA</country>
             </postal>
-            <phone>+1 918 307 1415</phone>
+            <phone>+1 408 419 3018</phone>
             <email>thomas@netapp.com</email>
         </address>
     </author>
@@ -31,7 +30,9 @@
 
     <abstract>
       <t>
-        This document specifies the minorversioning rules for NFSv4.
+        This document specifies the minor versioning rules for NFSv4.
+        It also specifices how those minor versioning rules may
+        be modified.
       </t>
     </abstract>
 

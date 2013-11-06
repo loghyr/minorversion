@@ -37,7 +37,7 @@
      symbolic tags in the references (and citations)
      and others prefer numbers. --> 
 
-<?rfc symrefs="no"?>
+<?rfc symrefs="yes"?>
 <?rfc sortrefs="yes" ?>
 
 <!-- these two save paper: start new paragraphs from the same page etc. -->
@@ -50,5 +50,5 @@
 <rfc
     category="std"
     ipr="trust200902"
-    docName="DRAFTVERSION.txt" >
+    docName="DRAFTVERSION" >
 

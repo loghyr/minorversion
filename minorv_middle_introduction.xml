@@ -1,9 +1,9 @@
-<!-- Copyright (C) The IETF Trust (2012) -->
-<!-- Copyright (C) The Internet Society (2012) -->
+<!-- Copyright (C) The IETF Trust (2012-2013) -->
+<!-- Copyright (C) The Internet Society (2012-2013) -->
 <section anchor="ss:intro" title="Introduction">
   <t>
     To address the requirement of an NFS protocol that can evolve as the
-    need arises, the NFSv4 protocol contains the rules and framework to
+    need arises, the Network File System (NFS) version 4 (NFSv4) protocol contains the rules and framework to
     allow for future minor changes or versioning.
   </t>
 
@@ -11,17 +11,41 @@
     The base assumption with respect to minor versioning is that any
     future accepted minor version will be documented in one or more
     Standards Track RFCs.  Minor version 0 of the NFSv4 protocol is
-    represented by <xref target="ref:RFC3530bis" />, minor version 1
-    by <xref target='ref:RFC5661' />, and minor version
-    2 by <xref target='ref:nfsv4.2' />.  
-    The COMPOUND and CB_COMPOUND procedures support the encoding of the
+    represented by <xref target="RFC3530" />, minor version 1
+    by <xref target='RFC5661' />, and minor version
+    2 by <xref target='NFSv42' />.  
+    The COMPOUND (see Section 14.2 of <xref target="RFC3530" />)
+    and CB_COMPOUND (see Section 15.2 of <xref target="RFC3530" />)
+    procedures support the encoding of the
     minor version being requested by the client.
   </t>
+</section>
 
+<section anchor="ss:terms" title="Terminology">
+  <t>
+    A basic familarity with the NFSv4 terminology is assumed in
+    this document, the reader is pointed to <xref target="RFC3530" />.
+  </t>
+</section>
+
+<section anchor="ss:mods" title="Modifying the minor version rules">
+  <t>
+    The minor versioning rules had been being maintained inside the
+    various Standards Track RFCs, which had the impact of the minor
+    versioning rules being modified as needed per release of the
+    minor versions. The rules for minor versions SHOULD stand outside
+    the minor versions and be tracked by their own Standard Track RFCs.
+    As such, all modifications to the minor versioning rules MUST
+    be documented not in the minor version documents, but in
+    Standard Track RFCs which are focused entirely on the minor
+    versioning rules themselves.
+  </t>
+</section>
+
+<section anchor="sec:rules" title="The minor versioning rules">
   <t>
     The following items represent the basic rules for the development of
-    minor versions.  Note that a future minor version may modify or add
-    to the following rules as part of the minor version definition.
+    minor versions.
   </t>
 
   <t>
@@ -29,7 +53,7 @@
       <t>
         Procedures are not added or deleted.
         <vspace blankLines="1"/>
-        To maintain the general RPC model, NFSv4 minor versions will not
+        To maintain the general Remote Procedure Call (RPC) model, NFSv4 minor versions will not
         add to or delete procedures from the NFS program.
       </t>
 
@@ -83,7 +107,7 @@
           </t>
 
           <t>
-            adding bits to existing attributes like ACLs that have flag
+            adding bits to existing attributes like Access Control Lists (ACL) that have flag
             words
           </t>
 
@@ -96,6 +120,15 @@
             adding cases to a switched union
           </t>
         </list>
+      </t>
+
+      <t>
+        Note that when adding new cases to a switched union, a minor
+        version must not make new cases be REQUIRED. While the encapsulating
+        operation may be REQUIRED, the new cases (the specific arm
+        of the discriminated union) is not. The error code
+        NFS4ERR_UNION_NOTSUPP is used to notify the client when the
+        server does not support such a case.
       </t>
 
       <t>
@@ -143,13 +176,43 @@
       </t>
 
       <t>
+        Minor versions may declare an operation to be OBSOLESCENT, which
+        indicates an intention to remove the operation (i.e., make it
+        MANDATORY TO NOT implement) in a subsequent minor version.  Such
+        labeling is separate from the question of whether the operation
+        is REQUIRED or RECOMMENDED or OPTIONAL in the current minor
+        version.  An operation may be both REQUIRED for the given minor
+        version and marked OBSOLESCENT, with the expectation that it
+        will be MANDATORY TO NOT implement in the next (or other
+        subsequent) minor version.
+      </t>
+
+      <t>
+        Note that the early notification of operation obsolescence is
+        put in place to mitigate the effects of design and
+        implementation mistakes, and to allow protocol development to
+        adapt to unexpected changes in the pace of implementation.  Even
+        if an operation is marked OBSOLESCENT in a given minor version,
+        it may end up not being marked MANDATORY TO NOT implement in the
+        next minor version.  In unusual circumstances, it might not be
+        marked OBSOLESCENT in a subsequent minor version, and never
+        become MANDATORY TO NOT implement.
+      </t>
+
+      <t>
         Minor versions may downgrade features from REQUIRED to
-        RECOMMENDED, or RECOMMENDED to OPTIONAL.
+        RECOMMENDED, from RECOMMENDED to OPTIONAL, or from OPTIONAL to
+        MANDATORY TO NOT implement.  Also, if a feature was marked as
+        OBSOLESCENT in the prior minor version, it may be downgraded
+        from REQUIRED to OPTIONAL from RECOMMENDED to MANDATORY TO NOT
+        implement, or from REQUIRED to MANDATORY TO NOT implement.
       </t>
 
       <t>
         Minor versions may upgrade features from OPTIONAL to
-        RECOMMENDED, or RECOMMENDED to REQUIRED.
+        RECOMMENDED, or RECOMMENDED to REQUIRED.  Also, if a feature was
+        marked as OBSOLESCENT in the prior minor version, it may be
+        upgraded to not be OBSOLESCENT.
       </t>
 
       <t>
@@ -174,22 +237,6 @@
         similar returned object from the COMPOUND procedure with minor
         version X for another COMPOUND procedure with minor version Y,
         where X != Y.
-      </t>
-    </list>
-  </t>
-</section>
-
-<section title='Needed todos'>
-  <t>
-    <list style='numbers'>
-      <t>
-        Add discriminated arm of union.
-      </t>
-      <t>
-        Add that new rules go here, not in new minor version.
-      </t>
-      <t>
-        OBSOLETE now versus later.
       </t>
     </list>
   </t>
