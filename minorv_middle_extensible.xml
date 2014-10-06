@@ -192,7 +192,7 @@
     </t>
   </section>
 
-  <section anchor="ss:extensible:addl" title="Additional Informational Documents>
+  <section anchor="ss:extensible:addl" title="Additional Informational Documents">
     <t>
       Additional documents will be required from time to time.   The
       purpose of these documents will be to organize existing material
@@ -265,12 +265,12 @@
   <section anchor="ss:extensible:relationship"
          title="Relationship Between Minor versioning and Extensions within a Minor Version">
     <t>
-      Extensibility of minor version are governed by the following rules:
+      The extensibility of minor versions are governed by the following rules:
 
         <list style="symbols">
           <t>
             Minor versions zero and one are not extensible.  Each has a fixed set of
-            optional features as described in <xref target="RFC3530bis /> and
+            optional features as described in <xref target="RFC3530bis" /> and
             <xref target="RFC5661" />.
           </t>
 
