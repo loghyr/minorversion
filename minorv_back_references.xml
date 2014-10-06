@@ -69,6 +69,19 @@
         target="ftp://ftp.isi.edu/in-notes/rfc5661.txt"/>
     </reference>
 
+    <reference anchor='RFC3530bis'>
+      <front>
+        <title>Network File System (NFS) version 4 Protocol</title>
+        <author initials="T." surname="Haynes" fullname="T. Haynes">
+          <organization>NetApp</organization>
+        </author>
+        <author initials="D." surname="Noveck" fullname="D. Noveck">
+          <organization></organization>
+        </author>
+        <date year="2014" month="April" />
+      </front>
+      <seriesInfo name="draft-ietf-nfsv4-rfc3530bis-33" value="(Work In Progress)"/>
+    </reference>
 </references>
 
 <references title="Informative References">
