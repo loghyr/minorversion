@@ -3,7 +3,7 @@
 
 <section anchor="ss:extensible" title="Extensions within Minor Versions">
   <t>
-    An important goal of thiis documentis to enable extensions to be
+    An important goal of this document is to enable extensions to be
     made to the features included in an existing minor version, without
     the overhead attendant upon the creation of an entirely new minor
     version.
@@ -58,7 +58,7 @@
           At the time the working group document is complete, the
           working group, in addition to, normal document review, can and
           should look at what prototype implementations of the feature have
-          been done and use that information to determine the workability
+          been done and use that information to determine the work-ability
           of the feature.
         </t>
       </list>
@@ -101,9 +101,9 @@
 
         <t>
           A summary description all changes made by this feature to the xdr
-          defunion of the protocol, including operation codes, attribute
+          definition of the protocol, including operation codes, attribute
           numbers, added flag bits and enumeration values, and request and
-          response structures for new iperation together with the other xdr
+          response structures for new operation together with the other xdr
           extensions needed to support them.
         </t>
 
@@ -192,7 +192,7 @@
     </t>
   </section>
 
-  <section anchor="ss:extensible:addl" title="Additional InformatIonal Documents>
+  <section anchor="ss:extensible:addl" title="Additional Informational Documents>
     <t>
       Additional documents will be required from time to time.   The
       purpose of these documents will be to organize existing material
@@ -216,9 +216,9 @@
         </t>
 
         <t>
-          A consolidated list of XDR assigments of values (e.g., operation
+          A consolidated list of XDR assignments of values (e.g., operation
           codes, attribute numbers, error codes, new flag bits, enumeration
-          extensions) for all features under developmenT (i.e., accepted as
+          extensions) for all features under development (i.e., accepted as
           working-group standards-track documents but not yet published or
           abandoned).
         </t>
@@ -263,7 +263,7 @@
   </section>
 
   <section anchor="ss:extensible:relationship"
-         title="Relationsip Between Minor versioning and Extensions within a Minor Version">
+         title="Relationship Between Minor versioning and Extensions within a Minor Version">
     <t>
       Extensibility of minor version are governed by the following rules:
 
@@ -276,8 +276,8 @@
 
           <t>
             Minor versions beyond one are presumed extensible as discussed herein.
-            However, any statement within the minor version specfication disallowing
-            extension wll cause that minor version to be considered non-extensible.
+            However, any statement within the minor version specification disallowing
+            extension will cause that minor version to be considered non-extensible.
           </t>
 
           <t>
