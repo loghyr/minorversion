@@ -117,7 +117,7 @@
           OPTIONAL), and its relationship to the feature being described
           (i.e., REQUIRED for every implementation of the feature, or OPTIONAL
           in the presence of the feature).  This would be similar to the
-          material in section 14 of <xref target=="NFSv42" /> but it is restricted
+          material in section 14 of <xref target="NFSv42" /> but it is restricted
           to a single feature and expanded in scope to include all feature
           elements.
         </t>
