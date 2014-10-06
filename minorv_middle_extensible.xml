@@ -1,291 +1,329 @@
 <!-- Copyright (C) The IETF Trust (2014) -->
 <!-- Copyright (C) The Internet Society (2014) -->
 
-<section anchor="ss:extensible" title="NFSv4.2 as an Extensible Protocol">
+<section anchor="ss:extensible" title="Extensions within Minor Versions">
   <t>
-    An additional goal of NFSv4.2 is to enable extensions to be
-    made to the features included in this document, without the
-    overhead attendant upon the creation of an entirely new minor
+    An important goal of thiis documentis to enable extensions to be
+    made to the features included in an existing minor version, without
+    the overhead attendant upon the creation of an entirely new minor
     version.
   </t>
 
-  <t>
-    Each such extension will be in the form of a working-group
-    standards-track document which defines a new optional feature.
-    The definition of the new feature may include one or more
-    "feature elements" which add to the existing XDR in ways already
-    used in creating new minor versions.  Other sorts of XDR
-    modification are not allowed.  Feature elements include new
-    operations, callbacks,  attributes, and enumeration values.
-    The functionality of some existing operations may be extended
-    by the addition of new flags bits in existing flag words and
-    new cases in existing switched unions.  New error codes may be
-    added but the set of valid error codes to be returned by an
-    operation is fixed, except that existing operations may return
-    new errors to respond to situations that only arise when
-    previously unused flag bits are set or when extensions to a
-    switched union are used.
-  </t>
+  <section anchor="ss:extensible:doc" title="Feature Specification Documents">
+    <t>
+      Each such extension will be in the form of a working-group
+      standards-track document which defines a new optional feature.
+      The definition of the new feature may include one or more
+      "feature elements" which add to the existing XDR in ways already
+      used in creating new minor versions.  Other sorts of XDR
+      modification are not allowed.  Feature elements include new
+      operations, callbacks,  attributes, and enumeration values.
+      The functionality of some existing operations may be extended
+      by the addition of new flags bits in existing flag words and
+      new cases in existing switched unions.  New error codes may be
+      added but the set of valid error codes to be returned by an
+      operation is fixed, except that existing operations may return
+      new errors to respond to situations that only arise when
+      previously unused flag bits are set or when extensions to a
+      switched union are used.
+    </t>
 
-  <t>
-    Such an additional feature will become, for all intents and
-    purposes, part of NFSv4.2 upon publication of the description
-    as a Proposed Standard, enabling such extensions to be used by
-    new client and server implementations without, as previously
-    required, a change in the value of the minorversion field with
-    the COMPOUND operation.
-  </t>
+    <t>
+      Such an additional feature will become, for all intents and
+      purposes, part of the current NFSv4 minor version upon publication
+      of the description as a Proposed Standard, enabling such extensions
+      to be used by new client and server implementations without, as
+      previously required, a change in the value of the minorversion field
+      within the COMPOUND operation.
+    </t>
 
-  <t>
-    The working group has two occasions to make sure that such
-    features are appropriate ones:
+    <t>
+      The working group has two occasions to make sure that such
+      features are appropriate ones:
 
-    <list style='symbols'>
-      <t>
-        At the time the feature definition document becomes a working
-        group document, the working group needs to determine, in
-        addition to the feature's general compatibility with NFSv4,
-        that the XDR assignments (i.e., additional values for
-        operation callback and attribute numbers, and for new flags
-        and switch values to be added to existing operations)
-        associated with the new feature are complete and do not
-        conflict with those in the existing protocol or those
-        currently under development.
-      </t>
+      <list style='symbols'>
+        <t>
+          At the time the feature definition document becomes a working
+          group document, the working group needs to determine, in
+          addition to the feature's general compatibility with NFSv4,
+          that the XDR assignments (i.e., additional values for
+          operation callback and attribute numbers, and for new flags
+          and switch values to be added to existing operations)
+          associated with the new feature are complete and do not
+          conflict with those in the existing protocol or those
+          currently under development.
+        </t>
 
-      <t>
-        At the time the working group document is complete, the
-        working group, in addition to, normal document review, can
-        look at what prototype implementations of the feature have
-        been done and use that information to determine the workability
-        of the feature.
-      </t>
-    </list>
-  </t>
+        <t>
+          At the time the working group document is complete, the
+          working group, in addition to, normal document review, can and
+          should look at what prototype implementations of the feature have
+          been done and use that information to determine the workability
+          of the feature.
+        </t>
+      </list>
+    </t>
 
-  <t>
-    Such feature definition documents would contain a number of
-    items, following the pattern of this specification.  The only
-    difference would be that while this specification defines a
-    number of features to be incorporated in NFSv4.2, the feature
-    definition documents would each define a single feature.
-  </t>
+    <t>
+      Such feature definition documents would contain a number of
+      items, following the pattern of the NFSv4.2 specification.
+      The only difference would be that while the NFSv4.2 specification
+      defines a number of features to be incorporated in NFSv4.2, the
+      feature definition documents would each define a single feature.
+    </t>
 
-  <t>
-    Such feature definition documents would contain a number of
-    In addition to a general explanation of the feature in question,
-    the items to be included in such feature definition documents
-    would be:
+    <t>
+      Such feature definition documents would contain a number of
+      In addition to a general explanation of the feature in question,
+      the items to be included in such feature definition documents
+      would be:
 
-    <list style='symbols'>
-      <t>
-        Description of new operations (corresponding to sections 16 and 17
-        of the current document).
-      </t>
+      <list style='symbols'>
+        <t>
+          Description of new operations (corresponding to sections 16 and 17
+          of <xref target="NFSv42" />).
+        </t>
 
-      <t>
-        Description of any modified operations (corresponding to section
-        15 of the current document).
-      </t>
+        <t>
+          Description of any modified operations (corresponding to section
+          15 of <xref target="NFSv42" />).
+        </t>
 
-      <t>
-        Description of new attributes (corresponding to section 13 of the
-        current document).
-      </t>
+        <t>
+          Description of new attributes (corresponding to section 13 of
+          <xref target="NFSv42" />).
+        </t>
 
-      <t>
-        Description of any added error codes (corresponding to section 12.1
-        of the current document).
-      </t>
+        <t>
+          Description of any added error codes (corresponding to section 12.1
+          of <xref target="NFSv42" />).
+        </t>
 
-      <t>
-        A summary description all changes made by this feature to the xdr
-        defunion of the protocol, including operation codes, attribute
-        numbers, added flag bits and enumeration values, and request and
-        response structures for new iperation together with the other xdr
-        extensions needed to support them.
-      </t>
+        <t>
+          A summary description all changes made by this feature to the xdr
+          defunion of the protocol, including operation codes, attribute
+          numbers, added flag bits and enumeration values, and request and
+          response structures for new iperation together with the other xdr
+          extensions needed to support them.
+        </t>
 
-      <t>
-        A listing giving the valid errors for each new operation and callback
-        (corresponds to sections 12.2 and 12.3 of the current document).
-      </t>
+        <t>
+          A listing giving the valid errors for each new operation and callback
+          (corresponds to sections 12.2 and 12.3 of <xref target="NFSv42" />).
+        </t>
 
-      <t>
-        A table giving for each new feature element its status (always
-        OPTIONAL), and its relationship to the feature being described
-        (i.e., REQUIRED for every implementation of the feature, or OPTIONAL
-        in the presence of the feature).  This would be similar to the
-        material in section 14 of the current document but it is restricted
-        to a single feature and expanded in scope to include all feature
-        elements.
-      </t>
+        <t>
+          A table giving for each new feature element its status (always
+          OPTIONAL), and its relationship to the feature being described
+          (i.e., REQUIRED for every implementation of the feature, or OPTIONAL
+          in the presence of the feature).  This would be similar to the
+          material in section 14 of <xref target=="NFSv42" /> but it is restricted
+          to a single feature and expanded in scope to include all feature
+          elements.
+        </t>
 
-      <t>
-        All of the sections required for RFC publication, such as "Security
-        Considerations", "IANA considerations", etc.
-      </t>
-    </list>
-  </t>
+        <t>
+          All of the sections required for RFC publication, such as "Security
+          Considerations", "IANA considerations", etc.
+        </t>
+      </list>
+    </t>
 
-  <t>
-    Such feature definition documents would contain a number of
-    Addition of features to NFSv4.2 will take advantage of the
-    existing NFSv4 infrastructure that allows optional features to
-    be added to minor versions, but without in this case requiring
-    any change the version number.  This will enable compatibility
-    with existing clients and servers.  In particular:
+    <t>
+      Such feature definition documents would contain a number of
+      Addition of features to an existing minor version will take
+      advantage of the existing NFSv4 infrastructure that allows optional
+      features to be added to new minor versions, but without in this case
+      requiring any change the version number.  This will enable
+      compatibility with existing clients and servers.  In particular:
 
-    <list style='symbols'>
-      <t>
-        Existing server implementations will return NFS4ERR_NOTSUPP in
-        response to any use of the new operation, allowing the client to
-        determine that the requested (and potentially the feature in question)
-        is not supported by the server.
-      </t>
+      <list style='symbols'>
+        <t>
+          Existing server implementations will return NFS4ERR_NOTSUPP
+          or NFS4ERR_OP_ILLEGAL in response to any use of the new
+          operation, allowing the client to determine that the
+          requested (and potentially the feature in question) is
+          not supported by the server.
+        </t>
 
-      <t>
-        Clients can determine whether particular new attributes are supported
-        by a given server by examining the value returned as the value of
-        the supported_attr attribute.
-      </t>
+        <t>
+          Clients can determine whether particular new attributes are supported
+          by a given server by examining the value returned as the value of
+          the supported_attr attribute.
+        </t>
 
-      <t>
-        New callbacks will only be sent to clients that have used the new
-        features associated with them, allowing existing clients to be
-        unaware of their existence.
-      </t>
+        <t>
+          New callbacks will only be sent to clients that have used the new
+          features associated with them, allowing existing clients to be
+          unaware of their existence.
+        </t>
 
-      <t>
-        Existing server implementations that do not recognize new flag bits
-        will return NFS4ERR_INVAL, enabling the client to determine that
-        the new flag value is not supported by the server.
-      </t>
+        <t>
+          Existing server implementations that do not recognize new flag bits
+          will return NFS4ERR_INVAL, enabling the client to determine that
+          the new flag value is not supported by the server.
+        </t>
 
-      <t>
-        Existing server implementations that do not recognize the new arm
-        of a switched union will return will return NFS4ERR_INVAL or
-        NFS4ERR_UNION_NOTSUPP, enabling the client to determine that the
-        the new union arm is not supported by the server.
-      </t>
+        <t>
+          Existing server implementations that do not recognize the new arm
+          of a switched union will return will return NFS4ERR_INVAL or
+          NFS4ERR_UNION_NOTSUPP, enabling the client to determine that the
+          the new union arm is not supported by the server.
+        </t>
 
-      <t>
-        Error values returned to the client for all requests that do not
-        use new features will only be those previously allowed.  Only when
-        the client uses a new feature will a previously invalid error value
-        be returned.
-      </t>
-    </list>
-  </t>
+        <t>
+          Error values returned to the client for all requests that do not
+          use new features will only be those previously allowed.  Only when
+          the client uses a new feature will a previously invalid error value
+          be returned.
+        </t>
+      </list>
+    </t>
 
-  <t>
-    Given that some existing servers may have XDR parsing implementations
-    that cannot easily accommodate previously unknown operations
-    or switched union arms, clients should carefully determine
-    whether particular features are supported by the server before
-    proceeding to use them and need to be prepared to treat
-    NFS4ERR_BADXDR as indicating non-support of a new operation or
-    switched union arm where server support for a particular feature
-    is being tested.
-  </t>
+    <t>
+      Given that some existing servers may have XDR parsing implementations
+      that cannot easily accommodate previously unknown operations
+      or switched union arms, clients should carefully determine
+      whether particular features are supported by the server before
+      proceeding to use them and need to be prepared to treat
+      NFS4ERR_BADXDR as indicating non-support of a new operation or
+      switched union arm where server support for a particular feature
+      is being tested.
+    </t>
+  </section>
 
-  <t>
-    Additional documents will be required from time to time.   The
-    purpose of these documents will be to organize existing material
-    so that an implementer will not have to scan a large set of
-    feature definition to find information being sought.  The
-    frequency of updates for such documents will be affected by
-    implementer needs and the ability to easily generate such
-    documents, preferably by automated means.  These documents will
-    be informational documents whose purpose is to simplify use of
-    the standards-track documents.  Some desirable elements would
-    include:
+  <section anchor="ss:extensible:addl" title="Additional InformatIonal Documents>
+    <t>
+      Additional documents will be required from time to time.   The
+      purpose of these documents will be to organize existing material
+      so that an implementer will not have to scan a large set of
+      feature definition document or minor version specification
+      to find information being sought.
+    </t>
 
-    <list style='symbols'>
-      <t>
-        An updated XDR for the protocol as a whole including feature elements
-        from all features accepted as Proposed Standards.
-      </t>
+    <t>
+      The frequency of updates for such documents will be affected by
+      implementer needs and the ability to easily generate such
+      documents, preferably by automated means.  These documents will
+      be informational documents whose purpose is to simplify use of
+      the standards-track documents.  Some desirable elements would
+      include:
 
-      <t>
-        A consolidated list of XDR assigments of values (e.g., operation
-        codes, attribute numbers, error codes, new flag bits, enumeration
-        extensions) for all features under developmenT (i.e., accepted as
-        working-group standards-track documents byut not yet published or
-        abandoned).
-      </t>
+      <list style='symbols'>
+        <t>
+          An updated XDR for the protocol as a whole including feature elements
+          from all features accepted as Proposed Standards.
+        </t>
 
-      <t>
-        A list of all feature definition documents that have been approved
-        as working group documents but have not yet been approved as proposed
-        standards.
-      </t>
+        <t>
+          A consolidated list of XDR assigments of values (e.g., operation
+          codes, attribute numbers, error codes, new flag bits, enumeration
+          extensions) for all features under developmenT (i.e., accepted as
+          working-group standards-track documents but not yet published or
+          abandoned).
+        </t>
 
-      <t>
-        A table mapping operations and callbacks to the most recent document
-        containing a description of that operation.
-      </t>
+        <t>
+          A list of all feature definition documents that have been approved
+          as working group documents but have not yet been approved as proposed
+          standards.
+        </t>
 
-      <t>
-        A table mapping attributes to the most recent document containing
-        a description of that attribute.
-      </t>
+        <t>
+          A table mapping operations and callbacks to the most recent document
+          containing a description of that operation.
+        </t>
 
-      <t>
-        A table giving, for each operation in the protocol, the errors that
-        may validly be returned for that operation.  If possible, it would
-        be desirable to give, as does RFC5661, the operations which may
-        validly return each particular error.
-      </t>
+        <t>
+          A table mapping attributes to the most recent document containing
+          a description of that attribute.
+        </t>
 
-      <t>
-        A table giving for each operation, callback, and attribute and for
-        each feature element in a published extension giving its status
-        OPTIONAL, REQUIRED, RECOMMENDED, MANDATORY to NOT implement), and
-        its relationship to the feature which allows its inclusion (i.e.,
-        REQUIRED for every implementation of the feature, or OPTIONAL in
-        the presence of the feature).  This would be similar to the material
-        in section 14 expanded in scope to include all feature elements,
-        and updated to include all published features that are part of
-        NFSv4.2, at the date of publication.
-      </t>
-    </list>
-  </t>
+        <t>
+          A table giving, for each operation in the protocol, the errors that
+          may validly be returned for that operation.  If possible, it would
+          be desirable to give, as does RFC5661, the operations which may
+          validly return each particular error.
+        </t>
 
-  <t>
-    While making NFSv4.2 extensible will decrease the need for new
-    minor versions, it will not eliminate them.  In particular,
+        <t>
+          A table giving for each operation, callback, and attribute and for
+          each feature element in a published extension giving its status
+          OPTIONAL, REQUIRED, RECOMMENDED, MANDATORY to NOT implement), and
+          its relationship to the feature which allows its inclusion (i.e.,
+          REQUIRED for every implementation of the feature, or OPTIONAL in
+          the presence of the feature).  This would be similar to the material
+          in section 14 of <xref target="NFSv42"/>, expanded in scope to include
+          all feature elements, and updated to include all published features
+          that are part of the current NFSv4 minor version, at the date of
+          publication.
+        </t>
+      </list>
+    </t>
+  </section>
 
-    <list style='symbols'>
-      <t>
-        A new minor version will be required for any change in the status
-        of a feature element (i.e., an operation, callback, attribute, added
-        flag or switch case).  For example, changes which make operations
-        Recommended, Required or Mandatory to Not Implement will require a
-        minor version.
-      </t>
+  <section anchor="ss:extensible:relationship"
+         title="Relationsip Between Minor versioning and Extensions within a Minor Version">
+    <t>
+      Extensibility of minor version are governed by the following rules:
 
-      <t>
-        Any incompatible semantic change in the required or allowed processing
-        of an existing operation or attribute will require a minor version.
-      </t>
+        <list style="symbols">
+          <t>
+            Minor versions zero and one are not extensible.  Each has a fixed set of
+            optional features as described in <xref target="RFC3530bis /> and
+            <xref target="RFC5661" />.
+          </t>
 
-      <t>
-        Any change that extends the set of operations that an existing
-        operation, with the exception noted above.  New errors may be added
-        when the conditions that give rise to these new errors cannot arise
-        as long as new flag bits or switched union arms are not used.  I.e.,
-        when it is clear that existing client cannot receive these errors.
-      </t>
+          <t>
+            Minor versions beyond one are presumed extensible as discussed herein.
+            However, any statement within the minor version specfication disallowing
+            extension wll cause that minor version to be considered non-extensible.
+          </t>
 
-      <t>
-        Any change in the mapping of feature elements to features will
-        require a minor version.  For example, if a feature is to be split
-        into two separate features clients would no longer be able to infer
-        support for one operation from support for the other, in the same
-        way that had been done previously, invalidating logic in existing
-        clients.
-      </t>
-    </list>
-  </t>
+          <t>
+            No extension to a minor version may be made once the specification
+            document for a subsequent minor version becomes a working group
+            standards-track document.
+          </t>
+      </list>
+    </t>
+
+    <t>
+      While making minor versions extensible will decrease the frequency of
+      new minor versions, it will not eliminate the need for them.  In
+      particular,
+
+      <list style='symbols'>
+        <t>
+          A new minor version will be required for any change in the status
+          of a feature element (i.e., an operation, callback, attribute, added
+          flag or switch case).  For example, changes which make operations
+          Recommended, Required or Mandatory to Not Implement will require a
+          minor version.
+        </t>
+
+        <t>
+          Any incompatible semantic change in the required or allowed processing
+          of an existing operation or attribute will require a minor version.
+        </t>
+
+        <t>
+          Any change that extends the set of operations that an existing
+          operation, with the exception noted above.  New errors may be added
+          when the conditions that give rise to these new errors cannot arise
+          as long as new flag bits or switched union arms are not used.  I.e.,
+          when it is clear that existing client cannot receive these errors.
+        </t>
+
+        <t>
+          Any change in the mapping of feature elements to features will
+          require a minor version.  For example, if a feature is to be split
+          into two separate features clients would no longer be able to infer
+          support for one operation from support for the other, in the same
+          way that had been done previously, invalidating logic in existing
+          clients.
+        </t>
+      </list>
+    </t>
+  </section>
 </section>
