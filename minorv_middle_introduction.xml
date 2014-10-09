@@ -2,24 +2,58 @@
 <!-- Copyright (C) The Internet Society (2012-2013) -->
 
 <section anchor="ss:intro" title="Introduction">
+
   <t>
-    To address the requirement of an NFS protocol that can evolve as the
-    need arises, the Network File System (NFS) version 4 (NFSv4) protocol contains the rules and framework to
-    allow for future minor changes or versioning.
+    To address the requirement of an NFS protocol that can evolve
+    as the need arises, the Network File System (NFS) version 4
+    (NFSv4) protocol contains the rules and framework to allow for
+    future minor changes or versioning. These versioning rules SHOULD
+    maintain compatibility with existing clients and servers.
   </t>
 
   <t>
-    The base assumption with respect to minor versioning is that any
-    future accepted minor version will be documented in one or more
-    Standards Track RFCs.  Minor version 0 of the NFSv4 protocol is
-    represented by <xref target="RFC3530" />, minor version 1
-    by <xref target='RFC5661' />, and minor version
-    2 by <xref target='NFSv42' />.  
-    The COMPOUND (see Section 14.2 of <xref target="RFC3530" />)
-    and CB_COMPOUND (see Section 15.2 of <xref target="RFC3530" />)
-    procedures support the encoding of the
-    minor version being requested by the client.
+    A large portion of such changes will be part of new minor versions. 
+    The COMPOUND procedure (see Section 14.2 of <xref target="RFC3530" />)
+    specfies the minor version being used by the client.  The
+    CB_COMPOUND (see Section 15.2 of <xref target="RFC3530" />)
+    procedure specifies the minor version being used by the server
+    on callbacks.
   </t>
+
+  <t>
+    Each minor version is specified by one or more standards track RFC:
+
+    <list style='hanging'>
+      <t hangText='Minor version 0'>
+        is specified by <xref target="RFC3530" />
+      </t>
+
+      <t hangText='Minor version 1'>
+        is specified principally by <xref target='RFC5661' />
+      </t>
+
+      <t hangText='Minor version 2'>
+        is specified principally by <xref target='NFSv42' />.  
+      </t>
+    </list>
+  </t>
+
+  <t>
+    In addition to the creation of new minor versions, two other
+    sorts of versioning are discussed in this document:
+
+    <list style='symbols'>
+      <t>
+        Addition of OPTIONAL features to existing minor versions.
+      </t>
+
+      <t>
+        XDR-based extensions used to correct protocol bugs in existing
+        minor versions or associated features.
+      </t>
+    </list>
+  </t>
+
 </section>
 
 <section anchor="ss:terms" title="Terminology">
