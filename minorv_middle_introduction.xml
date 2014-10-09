@@ -56,13 +56,6 @@
 
 </section>
 
-<section anchor="ss:terms" title="Terminology">
-  <t>
-    A basic familiarity with the NFSv4 terminology is assumed in
-    this document, the reader is pointed to <xref target="RFC3530" />.
-  </t>
-</section>
-
 <section anchor="ss:mods" title="Modifying the minor version rules">
   <t>
     The minor versioning rules had been being maintained inside the
