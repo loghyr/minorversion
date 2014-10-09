@@ -87,6 +87,7 @@ IDXMLSRC_BASE = \
 	${DOC_PREFIX}_middle_start.xml \
 	${DOC_PREFIX}_middle_introduction.xml \
 	${DOC_PREFIX}_middle_terms.xml \
+	${DOC_PREFIX}_middle_modifying.xml \
 	${DOC_PREFIX}_middle_extensible.xml \
 	${DOC_PREFIX}_middle_security.xml \
 	${DOC_PREFIX}_middle_iana.xml \
