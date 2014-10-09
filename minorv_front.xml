@@ -2,8 +2,8 @@
 <!-- Copyright (C) The Internet Society (2014) -->
 
 <front>
-    <title abbrev="NFSv4">
-      Minor versioning Rules for NFSv4
+    <title abbrev="NFSv4 Version Management">
+      NFSv4 Version Management
     </title>
 
     <author fullname="Thomas Haynes"
@@ -24,7 +24,7 @@
     </author>
 
     <author initials='D.' surname='Noveck'
-            fullname = 'David Noveck' role='editor'>
+            fullname = 'David Noveck'>
       <organization abbrev='Dell'>Dell</organization>
       <address>
         <postal>
