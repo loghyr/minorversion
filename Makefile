@@ -7,7 +7,7 @@ DAY=`date +%d`
 PREVVERS=00
 VERS=01
 XML2RFC=xml2rfc
-DRAFT_BASE=draft-haynes-nfsv4-minorversioning
+DRAFT_BASE=draft-haynes-nfsv4-versioning
 DOC_PREFIX=minorv
 
 autogen/%.xml : %.x
