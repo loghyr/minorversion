@@ -1,0 +1,145 @@
+<!-- Copyright (C) The IETF Trust (2014) -->
+<!-- Copyright (C) The Internet Society (2014) -->
+
+<section anchor="ss:correction" title="Correction of Existing Minor Versions and Features">
+  <t>
+    The possibility always exists that there will be a need to
+    correct an existing feature in some way, after the acceptance
+    of that feature, or a minor version containing it, as a Proposed
+    Standard.  While the working group can reduce the probability
+    of such situations arising by waiting for running code before
+    considering a feature as done, it cannot reduce the probability
+    to zero.  As features are used more extensively and interact
+    with other features, previously unseen flaws may be discovered
+    and will need to be corrected.
+  </t>
+
+  <t>
+    Such corrections are best done in a bis document updating the
+    RFC defining the relevant feature definition document
+    or minor version specification.  In making such correction,
+    the working will have to carefully consider how to
+    assure interoperability with older clients and servers.
+  </t>
+
+  <t>
+    Often, corrections can be done without changing the protocol
+    XDR.  However, incompatible changes in server or client behavior
+    should not be mandated in order to avoid XDR changes.  When XDR
+    changes are necessary as part of correcting a flaw, these should
+    be done in a manner similar to that used when implementing new
+    minor versions or features within them.  In particular,
+
+    <list style="symbols">
+      <t>
+        Existing XDR structure may not be modified or deleted.
+      </t>
+
+      <t>
+        XDR extensions to may be used to correct existing protocol
+        facilities in a manner similar to those used to add additional
+        OPTIONAL features.  Such corrections may be done in an otherwise
+        non-extensible minor version, if the working group judges it
+        appropriate.
+      </t>
+
+      <t>
+        When a correction is made to an OPTIONAL feature, the result
+        is similar to a situation in which there are two independent
+        OPTIONAL features.  A server may choose to implement either
+        or both.
+      </t>
+
+      <t>
+        When a correction is made to a MANDATORY feature, the situation
+        becomes one in which neither the old nor the new new version
+        of the feature is MANDATORY.  Instead, it is MANDATORY that
+        a server support at least one of the two,  while each is
+        individually OPTIONAL.  Although use of the corrected version
+        is ultimately better, it is not RECOMMENDED, since the
+        choice of which version to support if only one is
+        supported will depend on the needs of clients, which may be slow
+        to adopt the updated version.
+      </t>
+
+      <t>
+	When a correction is made to a RECOMMENDED feature, the
+	situation is similar to the case of a MANDATORY feature.
+	Neither version is RECOMMENDED,  Neither the old nor the
+	new version of the feature is RECOMMENDED.  Instead, it is
+	RECOMMENDED that a server support at least one of the two,
+	while each is individually OPTIONAL.
+      </t>
+
+      <t>
+        In all of the cases above, it is appropriate that the old
+        version of the feature, be considered OBSOLESCENT, with the
+        expectation that the working group might, in a later minor
+        version, decide that the older version is to become
+        MANDATORY to NOT implement.
+      </t>
+    </list>
+  </t>
+
+  <t>
+    By doing things this way, the protocol with the XDR modification
+    can accommodate clients and servers that support either the
+    corrected or the uncorrected version of the protocol and also
+    clients and servers aware of and capable of supporting both
+    alternatives.
+
+    <list style="symbols">
+      <t>
+        A client that supports only the earlier version of the feature
+        (i.e., an older unfixed client) can determine whether the server
+        it is connecting to supports the older version of feature.
+        It is capable of interoperating with older servers that
+        support only the unfixed protocol as well as ones that
+        support both versions.
+      </t>
+
+      <t>
+        A client that supports only the corrected version of the feature
+        (i.e., a new or updated client) can determine whether the server
+        it is connecting to supports the newer version of the feature.
+        It is capable of interoperating with newer servers that support
+        only the updated feature as well as ones that support
+        both versions.
+      </t>
+
+      <t>
+        A client that supports both the older and newer version of the
+        feature can determine which version of the particular feature
+        is supported by the server it is working with.
+      </t>
+
+      <t>
+        A server that supports only the earlier version of the feature
+        (i.e., an older unfixed server) can only successfully interoperate
+        with older clients.  However newer clients can easily determine
+        that the feature cannot be used on that server.
+      </t>
+
+      <t>
+        A server that supports only the newer version of the feature
+        (i.e., a new or updated server) can only successfully
+        interoperate with newer clients.  However, older clients can
+        easily determine that the feature cannot be used on that server.
+        In the case of OPTIONAL features, clients can be expected
+        to deal with non-support of that particular feature.
+      </t>
+
+      <t>
+        A server that supports both the older and newer versions of
+        the feature can interopt with all client variants.
+      </t>
+    </list>
+  </t>
+
+  <t>
+    By using extensions in this manner, the protocol creates clear
+    path which preserves the functioning of existing clients and
+    servers and allowing client and server implementers to adopt
+    the new version of the feature at a reasonable pace.
+  </t>
+</section>
