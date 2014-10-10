@@ -1,16 +1,49 @@
 <!-- Copyright (C) The IETF Trust (2012-2013) -->
 <!-- Copyright (C) The Internet Society (2012-2013) -->
 
-<section anchor="ss:mods" title="Modifying the minor version rules">
+<section anchor="ss:mods" title="Consolidation of the Minor Version Rules">
   <t>
-    The minor versioning rules had been being maintained inside the
-    various Standards Track RFCs, which had the impact of the minor
-    versioning rules being modified as needed per release of the
-    minor versions. The rules for minor versions SHOULD stand outside
-    the minor versions and be tracked by their own Standard Track RFCs.
-    As such, all modifications to the minor versioning rules MUST
-    be documented not in the minor version documents, but in
-    Standard Track RFCs which are focused entirely on the minor
-    versioning rules themselves.
+    Previously, versioning rules had been being maintained and
+    specified in the Standards Track RFCs, defining the individual
+    minor versions.  As a result, versioning rules were modified
+    on an ad hoc basis for each new minor version.
+  </t>
+
+  <t>
+    This document defines a set of versioning rules, including rules
+    for minor version construction, that applies to the NFSv4
+    protocol as a whole.  The rules are subject to change but any
+    such change should be part of a standards track RFC obsoleting
+    or updating this document.
+  </t>
+
+  <t>
+    This document supersedes the minor versioning rules appearing
+    in the minor version specification RFC's.  As a result potential
+    conflicts among these documents should be addressed as follows:
+
+    <list style='symbols'>
+      <t>
+       The specification of the actual protocols for minor versions
+       previously published as Proposed Standards take precedence
+       over minor versioning rules in either this document or in
+       the minor version specification RFC's.  In other words, if
+       the transition from version A to version B violates a minor
+       versioning rules, the protocol stays as it is.
+      </t>
+
+      <t>
+       Otherwise, any conflict between the minor versioning rules
+       in this document and those in minor version specification
+       RFC's are to be resolved based on the treatment in this
+       document.
+      </t>
+    </list>
+  </t>
+
+  <t>
+    Future minor version specification documents should avoid
+    specifying minor versioning rules and reference this document
+    in connection with rules for minor versions.
   </t>
 </section>
