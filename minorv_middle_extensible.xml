@@ -142,11 +142,12 @@
 
       <list style='symbols'>
         <t>
-          Existing server implementations will return NFS4ERR_NOTSUPP
-          or NFS4ERR_OP_ILLEGAL in response to any use of a new
-          operation, allowing the client to determine that the
-          requested operation (and potentially the feature in
-          question) is not supported by the server.
+          Existing server implementations which are at least NFSv4.2)
+          will return NFS4ERR_NOTSUPP or NFS4ERR_OP_ILLEGAL in
+          response to any use of a new operation, allowing the
+          client to determine that the requested operation (and
+          potentially the feature in question) is not supported by
+          the server.
         </t>
 
         <t>
