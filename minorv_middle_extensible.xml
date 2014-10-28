@@ -138,62 +138,181 @@
       without in this case requiring any change in the minor version
       number.  Adding features in this way will enable compatibility
       with existing clients and servers, who may be unaware of the
-      new feature.  In particular:
+      new feature.
+    </t>
+
+    <t>
+      Because the receiver of a message may be unaware of the
+      existence of a specific extension, certain compatibility rules
+      need to be observed.  In some cases (e.g., addition of new
+      operations or callbacks or addition of new arms to an existing
+      switched union) older clients or servers may be unable to do
+      XDR parsing on an extension of whose existence they are
+      unaware.  In other cases (e.g., error returns) there are no
+      XDR parsing issues but existing clients and servers may have
+      expectations as to what may validly be returned.  Detailed
+      discussion of these compatibility issues appears below:
 
       <list style='symbols'>
         <t>
-          Existing server implementations will return NFS4ERR_NOTSUPP
-          or NFS4ERR_OP_ILLEGAL in response to any use of a new
-          operation, allowing the client to determine that the
-          requested operation (and potentially the feature in
-          question) is not supported by the server.
+          Issues related to messages sent to the server are discussed
+          in <xref target='ss:ext:compat:servers' />.
         </t>
 
         <t>
-          Clients can determine whether particular new attributes
-          are supported by a given server by examining the value
-          returned when the supported_attr attribute is interrogated.
-        </t>
-
-        <t>
-          New callbacks will only be sent to clients that have used the new
-          features associated with them, allowing existing clients to be
-          unaware of their existence.
-        </t>
-
-        <t>
-          Existing server implementations that do not recognize
-          new flag bits will return NFS4ERR_INVAL, enabling the
-          client to determine that the new flag value is not
-          supported by the server.
-        </t>
-
-        <t>
-          Existing server implementations that do not recognize the
-          new arm of a switched union will return NFS4ERR_INVAL or
-          NFS4ERR_UNION_NOTSUPP, enabling the client to determine that the
-          the new union arm is not supported by the server.
-        </t>
-
-        <t>
-          Error values returned to the client for all requests that do not
-          use new features will only be those previously allowed.  Only
-          when the client uses a new feature will a previously
-          invalid error value be returned.
+          Issues related to messages sent to the client are discussed
+          in <xref target='ss:ext:compat:clients' />.
         </t>
       </list>
     </t>
 
-    <t>
-      Given that some existing servers may have XDR parsing
-      implementations that cannot easily accommodate previously
-      unknown operations or switched union arms, clients should
-      carefully determine whether particular features are supported
-      by the server before proceeding to use them and need to
-      be prepared to treat NFS4ERR_BADXDR as indicating non-support
-      of a new operation or switched union arm where server
-      support for a particular feature is being tested.
-    </t>
+    <section anchor='ss:ext:compat:servers' title='Compatibility Issues for Messages Sent to Servers'>
+      <t>
+        This section deals with compatibility issues that relate
+        to messages sent to the server, i.e., requests and replies
+        to callbacks.  In the case of requests, it is the responsibility
+        of the client to determine whether the server in question
+        supports the extension in question before sending a request
+        containing it for any purpose other than determining whether
+        the server is aware of the extension.  In the case of
+        callback replies, the server demonstrates its awareness of
+        proper parsing for callback replies by sending the associated
+        callback.
+      </t>
+
+      <t>
+         Regarding the handling of requests:
+
+        <list style='symbols'>
+          <t>
+            Existing server implementations will return NFS4ERR_NOTSUPP
+            or NFS4ERR_OP_ILLEGAL in response to any use of a new
+            operation, allowing the client to determine that the
+            requested operation (and potentially the feature in
+            question) is not supported by the server.
+          </t>
+
+          <t>
+            Clients can determine whether particular new attributes
+            are supported by a given server by examining the value
+            returned when the supported_attr attribute is interrogated.
+            Clients need to do this before attempting to use attributes
+            defined in an extension since they cannot depend on the
+            server returning NFS4ERRATTRNOTSUPP for requests which
+            include a mask bit corresponding to a previously unspecified
+            attribute number (as opposed to one which is defined but
+            unsupported).
+          </t>
+
+          <t>
+            Existing server implementations that do not recognize
+            new flag bits will return NFS4ERR_INVAL, enabling the
+            client to determine that the new flag value is not
+            supported by the server.
+          </t>
+
+          <t>
+            Existing server implementations that do not recognize the
+            new arm of a switched union in a request will return NFS4ERR_INVAL or
+            NFS4ERR_UNION_NOTSUPP, enabling the client to determine that the
+            the new union arm is not supported by the server.
+          </t>
+        </list>
+      </t>
+
+      <t>
+        Given that some existing servers may have XDR parsing
+        implementations that cannot easily accommodate previously
+        unknown operations or switched union arms, clients should
+        carefully determine whether particular features are supported
+        by the server before proceeding to use them and need to
+        be prepared to treat NFS4ERR_BADXDR as indicating non-support
+        of a new operation or switched union arm where server
+        support for a particular feature is being tested.
+      </t>
+
+      <t>
+        Regarding the handling of responses to callbacks:
+
+        <list style='symbols'>
+          <t>
+            Error values returned to the server for all callbacks that do not
+            use new features will only be those previously allowed.  Only when
+            the server uses a new callback extension feature can a previously
+            invalid error value be returned.
+          </t>
+
+          <t>
+            Callback replies may only include a new arm of an existing switched
+            union when the server, typically in the callback being responded to,
+            has used a feature element associated with the feature that defined
+             he new switched union arm.
+          </t>
+        </list>
+      </t>
+    </section>
+
+    <section anchor='ss:ext:compat:clients' title='Compatibility Issues for Messages Sent to Clients'>
+      <t>
+        This sections deals with compatibility issues that relate to messages
+        sent to clients, i.e., request replies and callbacks.  In both cases,
+        extensions are only sent to clients that have demonstrated awareness
+        of the extensions in question by using an extension associated with
+        the same feature.
+      </t>
+
+      <t>
+        Regarding the handling of request replies:
+
+        <list style='symbols'>
+          <t>
+            Error values returned to the client for all requests that do not
+            use new features will only be those previously allowed.  Only when
+            the server uses a new callback extension feature can a previously
+            invalid error value be returned.
+          </t>
+
+          <t>
+            Replies may only include a new arm of an existing switched union
+            when the server, typically in the request being responded to,
+            has used a feature element associated with the feature that defined
+            the new switched union arm.
+          </t>
+        </list>
+      </t>
+
+      <t>
+        Regarding the handling of callbacks, the server needs to be sure that
+        it only sends callbacks to those clients prepared to receive and parse them.
+
+        <list style='symbols'>
+          <t>
+            In most cases, the new callback will be part of a feature that
+            contains new (forward) operations as well.  When this is the case,
+            the feature specification will specify the operations whose receipt
+            by a server is sufficient to indicate that the client issuing them
+            is prepared to accept and parse the associated callbacks.
+          </t>
+
+          <t>
+            For callbacks associated with features that have no new operations
+            defined, the feature specification should define some way for a
+            client to indicate that it is prepared to accept and parse
+            callbacks that are part of the extension.  For example, a
+            flag bit in the EXCHANGE_ID request may serve this purpose.
+          </t>
+
+          <t>
+            In both of the above cases, the ability to accept and parse the
+            specified callback is considered separate from support for the
+            callback.  The feature specification will indicate whether support
+            for the callback is required whenever the feature is used by the
+            client.  In cases in which support is not required, the client is
+            free to return NFS4ERR_NOTSUPP upon receiving the callback.
+          </t>
+        </list>
+      </t>
+    </section>
   </section>
 
   <section anchor="ss:ext:addl" title="Additional Informational Documents">
