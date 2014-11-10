@@ -180,8 +180,9 @@
       </t>
 
       <t>
-        Except for infrastructural changes, a minor version must not
-        introduce REQUIRED new features.
+        Other than where explicitly documented in a minor version's 
+        specification document, except for infrastructural changes,
+        a minor version must not introduce REQUIRED new features.
           <vspace blankLines="1"/>
         This rule allows for the introduction of new functionality and
         forces the use of implementation experience before designating a
