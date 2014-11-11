@@ -163,30 +163,49 @@
 
       <list style='symbols'>
         <t>
-	  The specification of the feature in question will have
-	  to be updated to explain the issue, how it was fixed, and
-	  the compatibility and upgrade strategy.  Normally this
-	  will require an RFC updating the associated feature
-	  specification document.  However, in the case of a
-	  correction to a feature documented in in a minor version
-	  definition document, the RFC will update that document
-	  instead.
+          The specification of the feature in question will have to be
+          updated to explain the issue, how it was fixed, and the
+          compatibility and upgrade strategy.  Normally this will require
+          an RFC updating the associated feature specification document.
+          However, in the case of a correction to a feature documented in
+          in a minor version definition document, the RFC will update that
+          document instead.
         </t>
 
         <t>
-          An updated XDR for minor version X will be produced.
+          An updated XDR for minor version X will be produced and will be
+          published as a updated to the minor version specification RFC for
+          minor version X.
+          <vspace blankLines="1"/>
+          When the correction is to feature documented in a minor version
+          definition, a single RFC will contain both updates to the minor
+          version specification RFC.
         </t>
 
         <t>
-	  An updated minor version indexing document for minor
-	  version X is desirable but not absolutely necessary.
+          An updated minor version indexing document for minor version X
+          is desirable but not absolutely necessary.
+          <vspace blankLines="1"/>
+          The question of updated minor version indexing documents for minor
+          versions between X and Y should be addressed by the working group on a
+          case-by-case basis.
         </t>
 
         <t>
-	  An updated XDR assignment document will be required.  It
-	  should be based
+          An updated XDR assignment document will be required.  It should
+          be based on the most recent such document associated wit minor version
+          Y and will serve as the basis for later XDR assignment drafts for minor
+          version Y.
         </t>
       </list>
+    </t>
+
+    <t>
+      The informational RFC's associated with minor version Y
+      (version indexing document and XDR assignment document) will
+      contain the effects of the correction when published.  Similarly,
+      the minor version specification RFC will contain the XDR
+      changes associated with the correction.
     </t>
   </section>
 </section>
