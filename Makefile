@@ -4,8 +4,8 @@
 YEAR=`date +%Y`
 MONTH=`date +%B`
 DAY=`date +%d`
-PREVVERS=01
-VERS=02
+PREVVERS=02
+VERS=03
 XML2RFC=xml2rfc
 DRAFT_BASE=draft-haynes-nfsv4-versioning
 DOC_PREFIX=minorv
