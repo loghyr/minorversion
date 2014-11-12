@@ -13,7 +13,7 @@
   <t>
     A large portion of such changes will be part of new minor versions. 
     The COMPOUND procedure (see Section 14.2 of <xref target="RFC3530" />)
-    specfies the minor version being used by the client.  The
+    specifies the minor version being used by the client.  The
     CB_COMPOUND (see Section 15.2 of <xref target="RFC3530" />)
     procedure specifies the minor version being used by the server
     on callbacks.

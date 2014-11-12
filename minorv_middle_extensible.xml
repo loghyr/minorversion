@@ -138,146 +138,400 @@
       without in this case requiring any change in the minor version
       number.  Adding features in this way will enable compatibility
       with existing clients and servers, who may be unaware of the
-      new feature.  In particular:
+      new feature.
+    </t>
+
+    <t>
+      Because the receiver of a message may be unaware of the
+      existence of a specific extension, certain compatibility rules
+      need to be observed.  In some cases (e.g., addition of new
+      operations or callbacks or addition of new arms to an existing
+      switched union) older clients or servers may be unable to do
+      XDR parsing on an extension of whose existence they are
+      unaware.  In other cases (e.g., error returns) there are no
+      XDR parsing issues but existing clients and servers may have
+      expectations as to what may validly be returned.  Detailed
+      discussion of these compatibility issues appears below:
 
       <list style='symbols'>
         <t>
-          Existing server implementations which are at least NFSv4.2)
-          will return NFS4ERR_NOTSUPP or NFS4ERR_OP_ILLEGAL in
-          response to any use of a new operation, allowing the
-          client to determine that the requested operation (and
-          potentially the feature in question) is not supported by
-          the server.
+          Issues related to messages sent to the server are discussed
+          in <xref target='ss:ext:compat:servers' />.
         </t>
 
         <t>
-          Clients can determine whether particular new attributes
-          are supported by a given server by examining the value
-          returned when the supported_attr attribute is interrogated.
-        </t>
-
-        <t>
-          New callbacks will only be sent to clients that have used the new
-          features associated with them, allowing existing clients to be
-          unaware of their existence.
-        </t>
-
-        <t>
-          Existing server implementations that do not recognize
-          new flag bits will return NFS4ERR_INVAL, enabling the
-          client to determine that the new flag value is not
-          supported by the server.
-        </t>
-
-        <t>
-          Existing server implementations that do not recognize the
-          new arm of a switched union will return NFS4ERR_INVAL or
-          NFS4ERR_UNION_NOTSUPP, enabling the client to determine that the
-          the new union arm is not supported by the server.
-        </t>
-
-        <t>
-          Error values returned to the client for all requests that do not
-          use new features will only be those previously allowed.  Only
-          when the client uses a new feature will a previously
-          invalid error value be returned.
+          Issues related to messages sent to the client are discussed
+          in <xref target='ss:ext:compat:clients' />.
         </t>
       </list>
     </t>
 
-    <t>
-      Given that some existing servers may have XDR parsing
-      implementations that cannot easily accommodate previously
-      unknown operations or switched union arms, clients should
-      carefully determine whether particular features are supported
-      by the server before proceeding to use them and need to
-      be prepared to treat NFS4ERR_BADXDR as indicating non-support
-      of a new operation or switched union arm where server
-      support for a particular feature is being tested.
-    </t>
+    <section anchor='ss:ext:compat:servers' title='Compatibility Issues for Messages Sent to Servers'>
+      <t>
+        This section deals with compatibility issues that relate
+        to messages sent to the server, i.e., requests and replies
+        to callbacks.  In the case of requests, it is the responsibility
+        of the client to determine whether the server in question
+        supports the extension in question before sending a request
+        containing it for any purpose other than determining whether
+        the server is aware of the extension.  In the case of
+        callback replies, the server demonstrates its awareness of
+        proper parsing for callback replies by sending the associated
+        callback.
+      </t>
+
+      <t>
+         Regarding the handling of requests:
+
+        <list style='symbols'>
+          <t>
+            Existing server implementations will return NFS4ERR_NOTSUPP
+            or NFS4ERR_OP_ILLEGAL in response to any use of a new
+            operation, allowing the client to determine that the
+            requested operation (and potentially the feature in
+            question) is not supported by the server.
+          </t>
+
+          <t>
+            Clients can determine whether particular new attributes
+            are supported by a given server by examining the value
+            returned when the supported_attr attribute is interrogated.
+            Clients need to do this before attempting to use attributes
+            defined in an extension since they cannot depend on the
+            server returning NFS4ERRATTRNOTSUPP for requests which
+            include a mask bit corresponding to a previously unspecified
+            attribute number (as opposed to one which is defined but
+            unsupported).
+          </t>
+
+          <t>
+            Existing server implementations that do not recognize
+            new flag bits will return NFS4ERR_INVAL, enabling the
+            client to determine that the new flag value is not
+            supported by the server.
+          </t>
+
+          <t>
+            Existing server implementations that do not recognize the
+            new arm of a switched union in a request will return NFS4ERR_INVAL or
+            NFS4ERR_UNION_NOTSUPP, enabling the client to determine that the
+            the new union arm is not supported by the server.
+          </t>
+        </list>
+      </t>
+
+      <t>
+        Given that some existing servers may have XDR parsing
+        implementations that cannot easily accommodate previously
+        unknown operations or switched union arms, clients should
+        carefully determine whether particular features are supported
+        by the server before proceeding to use them and need to
+        be prepared to treat NFS4ERR_BADXDR as indicating non-support
+        of a new operation or switched union arm where server
+        support for a particular feature is being tested.
+      </t>
+
+      <t>
+        Regarding the handling of responses to callbacks:
+
+        <list style='symbols'>
+          <t>
+            Error values returned to the server for all callbacks that do not
+            use new features will only be those previously allowed.  Only when
+            the server uses a new callback extension feature can a previously
+            invalid error value be returned.
+          </t>
+
+          <t>
+            Callback replies may only include a new arm of an existing switched
+            union when the server, typically in the callback being responded to,
+            has used a feature element associated with the feature that defined
+             he new switched union arm.
+          </t>
+        </list>
+      </t>
+    </section>
+
+    <section anchor='ss:ext:compat:clients' title='Compatibility Issues for Messages Sent to Clients'>
+      <t>
+        This sections deals with compatibility issues that relate to messages
+        sent to clients, i.e., request replies and callbacks.  In both cases,
+        extensions are only sent to clients that have demonstrated awareness
+        of the extensions in question by using an extension associated with
+        the same feature.
+      </t>
+
+      <t>
+        Regarding the handling of request replies:
+
+        <list style='symbols'>
+          <t>
+            Error values returned to the client for all requests that do not
+            use new features will only be those previously allowed.  Only when
+            the server uses a new callback extension feature can a previously
+            invalid error value be returned.
+          </t>
+
+          <t>
+            Replies may only include a new arm of an existing switched union
+            when the server, typically in the request being responded to,
+            has used a feature element associated with the feature that defined
+            the new switched union arm.
+          </t>
+        </list>
+      </t>
+
+      <t>
+        Regarding the handling of callbacks, the server needs to be sure that
+        it only sends callbacks to those clients prepared to receive and parse them.
+
+        <list style='symbols'>
+          <t>
+            In most cases, the new callback will be part of a feature that
+            contains new (forward) operations as well.  When this is the case,
+            the feature specification will specify the operations whose receipt
+            by a server is sufficient to indicate that the client issuing them
+            is prepared to accept and parse the associated callbacks.
+          </t>
+
+          <t>
+            For callbacks associated with features that have no new operations
+            defined, the feature specification should define some way for a
+            client to indicate that it is prepared to accept and parse
+            callbacks that are part of the extension.  For example, a
+            flag bit in the EXCHANGE_ID request may serve this purpose.
+          </t>
+
+          <t>
+            In both of the above cases, the ability to accept and parse the
+            specified callback is considered separate from support for the
+            callback.  The feature specification will indicate whether support
+            for the callback is required whenever the feature is used by the
+            client.  In cases in which support is not required, the client is
+            free to return NFS4ERR_NOTSUPP upon receiving the callback.
+          </t>
+        </list>
+      </t>
+    </section>
   </section>
 
-  <section anchor="ss:ext:addl" title="Additional Informational Documents">
+  <section anchor="ss:ext:addl" title="Additional Documents to be Produced">
     <t>
-      Additional documents will be required from time to time.
-      The purpose of these documents will be to organize existing
-      material so that an implementer will not have to scan a
-      large set of feature definition document or minor version
-      specifications to find information being sought.
+      Additional documents will be required from time to time.  These
+      documents will eventually become RFC's (informational or standards
+      track as described below), but the work of the working group and of
+      implementers developing features will be facilitated by a progression
+      of document drafts that incorporate information about new features
+      that are being developed or have been approved as Proposed Standards.
     </t>
 
-    <t>
-      The frequency of updates for such documents will be affected
-      by implementer needs and the ability to easily generate
-      such documents, preferably by automated means.  These
-      documents will be informational documents whose purpose
-      is to simplify use of the standards-track documents.  Some
-      desirable elements would include:
+    <section anchor="ss:ext:mvid" title="Minor Version Indexing Document">
+      <t>
+        One document will organize existing material for a minor
+        version undergoing extension so that implementers will not
+        have to scan a large set of feature definition documents
+        or minor version specifications to find information being
+        sought. Successive drafts of this document will serve as
+        an index to the current state of the extensible minor
+        version. Some desirable elements of this indexing document
+        would include:
 
-      <list style='symbols'>
-        <t>
-          An updated XDR for the protocol as a whole including
-          feature elements from all features and minor versions
-          accepted as Proposed Standards.
-        </t>
+        <list style='symbols'>
+          <t>
+            A list of all feature definition documents that have been
+            approved as working group documents but have not yet been
+            approved as Proposed Standards.
+          </t>
 
-        <t>
-          A consolidated list of XDR assignments of values (e.g., operation
-          codes, attribute numbers, error codes, new flag bits, enumeration
-          extensions) for all features under development (i.e., accepted as
-          working-group standards-track documents but not yet published or
-          abandoned).
-        </t>
+          <t>
+            A table mapping operations and callbacks to the most recent
+            document containing a description of that operation.
+          </t>
 
-        <t>
-          A list of all feature definition documents that have been
-          approved as working group documents but have not yet been
-          approved as Proposed Standards.
-        </t>
+          <t>
+            A table mapping attributes to the most recent document containing
+            a description of that attribute.
+          </t>
 
-        <t>
-          A table mapping operations and callbacks to the most recent
-          document containing a description of that operation.
-        </t>
+          <t>
+            A table giving, for each operation in the protocol, the
+            errors that may validly be returned for that operation.
+            If possible, it would be desirable to give, as does
+            <xref target="RFC5661" />, the operations which may
+            validly return each particular error.
+          </t>
 
-        <t>
-          A table mapping attributes to the most recent document containing
-          a description of that attribute.
-        </t>
+          <t>
+            A table giving for each operation, callback, and
+            attribute and for each feature element in a published
+            extension giving its status OPTIONAL, REQUIRED,
+            RECOMMENDED, MANDATORY to NOT implement), and its
+            relationship to the feature which allows its inclusion
+            (i.e., REQUIRED for every implementation of the feature,
+            or OPTIONAL in the presence of the feature).  This
+            would be similar to the material in Section 14 of
+            <xref target="NFSv42" />, expanded in scope to include
+            all feature elements, and updated to include all
+            published features that are part of the current NFSv4
+            minor version, at the date of publication.
+          </t>
+        </list>
+      </t>
 
-        <t>
-          A table giving, for each operation in the protocol, the
-          errors that may validly be returned for that operation.
-          If possible, it would be desirable to give, as does
-          <xref target="RFC5661" />, the operations which may
-          validly return each particular error.
-        </t>
+      <t>
+        The frequency of updates for this document will be affected by
+        implementer needs and the ability to easily generate document
+        drafts, preferably by automated means.  The most desirable situation
+        is one in which a new draft is available soon after each feature
+        reaches the status of a Proposed Standard.
+      </t>
+    </section>
 
-        <t>
-          A table giving for each operation, callback, and
-          attribute and for each feature element in a published
-          extension giving its status OPTIONAL, REQUIRED,
-          RECOMMENDED, MANDATORY to NOT implement), and its
-          relationship to the feature which allows its inclusion
-          (i.e., REQUIRED for every implementation of the feature,
-          or OPTIONAL in the presence of the feature).  This
-          would be similar to the material in Section 14 of
-          <xref target="NFSv42" />, expanded in scope to include
-          all feature elements, and updated to include all
-          published features that are part of the current NFSv4
-          minor version, at the date of publication.
-        </t>
-      </list>
-    </t>
+    <section anchor="ss:ext:cxr" title='Consolidated XDR Document'>
+      <t>
+        This document will consist of an updated XDR for the protocol as
+        a whole including feature elements from all features and minor
+        versions accepted as Proposed Standards.
+      </t>
 
-    <t>
-      The informational documents described above are desirable,
-      given that minor versions beyond NFSv4.1 are not fully described
-      in a single document.  Instead of a single document describing
-      a minor version, there will be a number and that number
-      can be expected to grow, as protocol development
-      continues.
-    </t>
+      <t>
+        A new draft should be prepared whenever a new feature within an
+        extensible minor version is accepted as a Proposed Standard. In
+        most cases, feature developers will be using a suitable XDR which
+        can then be reviewed and published.  In cases in which multiple
+        features reach Proposed Standard status at approximately the same
+        time, a merge of the XDR changes made by each feature may be
+        necessary.
+      </t>
+    </section>
+
+    <section anchor="ss:ext:xad" title='XDR Assignment Document'>
+      <t>
+        This document will contain consolidated lists of XDR value
+        assignments that are relevant to the protocol extension process.
+        It should contain lists of assignments for:
+
+        <list style='symbols'>
+          <t>
+            operation codes (separate lists for forward operations and for
+            callbacks)
+          </t>
+
+          <t>
+            attribute numbers
+          </t>
+
+          <t>
+            error codes
+          </t>
+
+          <t>
+            bits within flag words that have been extended since they were
+            first introduced.
+          </t>
+
+          <t>
+            enumeration values for enumerations which have been extended
+            since they were first introduced.
+          </t>
+        </list>
+      </t>
+
+      <t>
+        For each set of assignments, the individual assignments may be of
+        three types:
+
+        <list style='numbers'>
+          <t>
+            permanent assignments associated with a minor version or a
+            feature extension that has achieved Proposed Standard status.
+            <vspace blankLines="1"/>
+            These assignments are permanent in that the assigned value will
+            never be re-used.  However, a subsequent minor version may
+            define some or all feature elements associated with a feature
+            to be Mandatory to NOT support.
+          </t>
+
+          <t>
+            provisional assignments associated with a feature under
+            development (i.e., one which has been approved as a
+            working group document but has not been approved as a Proposed Standard).
+            <vspace blankLines="1"/>
+            Provisional assignments are not are not permanent and the values
+            assigned can be re-used in certain circumstances.  In
+            particular, when a feature with provisional assignments is not
+            progressing toward the goal of eventual Proposed Standard
+            status, the working group can judge the feature effort to have
+            been abandoned, allowing the codes formerly provisionally
+            allocated to be reclaimed and reassigned.
+          </t>
+
+          <t>
+            definition of individual assignments or ranges reserved for
+            experimental use.
+          </t>
+        </list>
+      </t>
+
+      <t>
+        A new draft of this document should be produced, whenever:
+
+        <list style='symbols'>
+          <t>
+            A minor version or feature specification is accepted as a
+            Proposed Standard.
+          </t>
+
+          <t>
+            A new feature is accepted for development and a draft of the
+            corresponding working-group standards-track document is produced
+          </t>
+
+          <t>
+            A feature previously accepted for development is abandoned.
+          </t>
+
+          <t>
+            The working group decides to make some change in assignments
+            for experimental use.
+          </t>
+        </list>
+      </t>
+    </section>
+
+    <section anchor="ss:ext:tfrfc" title="Transition of Documents to RFC's">
+      <t>
+        Each of these documents should be published as an RFC soon after
+        the minor version in question ceases to be considered extensible.
+        Typically this will happen when the working group makes the
+        specification for the subsequent minor version into a working
+        group document.  Some specifics about the individual documents
+        are listed below:
+
+        <list style='symbols'>
+          <t>
+            The most current draft of the indexing document for the minor
+            version would be published as an informational RFC.
+          </t>
+
+          <t>
+            The most current draft of the consolidated XDR document should
+            be published as a standards-track RFC.  It would update the
+            initial specification of the minor version.
+          </t>
+
+          <t>
+            The most recent draft of the XDR assignment document should be
+            published as an informational RFC.
+          </t>
+        </list>
+      </t>
+
+      <t>
+        Handling of these documents in the event of a post-approval
+        XDR correction is discussed in <xref target='ss:correction:docs' />.
+      </t>
+    </section>
   </section>
 
   <section anchor="ss:ext:relationship"
